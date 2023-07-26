@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} 
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{tikz, pgfplots, tcolorbox}
+\usetikzlibrary{positioning}
+
+
+\title{Algorithm Design Exercises}
+\author{ Tomás Spoturno \\ tomas.spoturno@fing.edu.uy }
+\date{2023}
+
+
+\begin{document}
+
+\maketitle \newpage
+
+\tableofcontents \newpage
+
+
+
+
+\section{Emparejamiento estable}
+
+\subsection{Ejercicio 1.1}
+Decide si consideras que la siguiente afirmación es verdadera o falsa. Si es verdadera, proporciona una breve explicación. Si es falsa, proporciona un contraejemplo. \\
+
+\emph{¿Verdadero o falso? En cada instancia del Problema de Emparejamiento Estable, existe un emparejamiento estable que contiene una pareja (m, w) tal que m ocupa el primer lugar en la lista de preferencias de w, y w ocupa el primer lugar en la lista de preferencias de m.} \\ 
+
+\textbf{Solución:} Falso. Consideremos los siguientes grupos de preferencias.
+\begin{center}
+$m_1: w_1 \; w_2$\\
+$m_2: w_2 \; w_1$\\
+$w_1: m_2 \; m_1 $\\
+$w_2: m_1 \; m_2$
+\end{center}
+
+En esta situación, no es posible obtener un emparejamiento estable que incluya una pareja $(m, w)$, donde $m$ esté en la cima de la lista de preferencias de $w$ y viceversa. \\
+
+Si $m_1$ estuviese emparejado con la mujer que ocupa el primer lugar en su lista de preferencias, entonces $m_1$ estaría emparejado con $w_1$. Sin embargo, bajo tal arreglo, $w_1$ no estaría emparejada con $m_2$, a pesar de que $m_2$ es su primera opción según su lista de preferencias.\\
+
+De forma análoga, si $m_2$ fuese emparejado con la mujer que ocupa el primer lugar en su lista de preferencias, entonces $m_2$ estaría emparejado con $w_2$. Sin embargo, en tal escenario, $w_2$ no estaría emparejada con $m_1$, a pesar de que $m_1$ es su elección principal.\\
+
+Por tanto, en esta situación, es imposible que $m_1$ y $m_2$ estén emparejados con la mujer que ocupa el primer lugar en su respectiva lista de preferencias, a la vez que dicha mujer esté emparejada con el hombre que ocupa el primer lugar en su lista de preferencias. Dada esta imposibilidad de obtener un emparejamiento donde ambas partes son la elección preferida de la otra, concluimos que no puede existir un emparejamiento estable que incluya una pareja $(m, w)$ donde $m$ esté en la cima de la lista de preferencias de $w$ y viceversa.
+
+\newpage
+
+\subsection{Ejercicio 1.2}
+Decide si crees que la siguiente afirmación es verdadera o falsa. Si es verdadera, proporciona una breve explicación. Si es falsa, proporciona un contraejemplo.\\
+
+\emph{¿Verdadero o falso? Considera una instancia del Problema de Emparejamiento Estable en la que existe un hombre m y una mujer w tal que m está clasificado en primer lugar en la lista de preferencias de w y w está clasificada en primer lugar en la lista de preferencias de m. Entonces, en todo emparejamiento estable S para esta instancia, el par (m, w) pertenece a S.}\\
+
+\textbf{Solución:} Verdadero. Esta afirmación es una consecuencia directa del Algoritmo de Gale-Shapley, que se utiliza para resolver el problema del emparejamiento estable. Si un hombre $m$ y una mujer $w$ se prefieren entre sí más que a cualquier otro, siempre estarán juntos en cualquier emparejamiento estable.\\
+
+Supongamos que hay un emparejamiento estable donde $m$ y $w$ no están juntos. Entonces, cada uno debe estar emparejado con alguien que prefiere menos que al otro, porque ambos se clasifican en primer lugar en las listas de preferencias del otro. Pero esto contradice la definición de emparejamiento estable, porque $m$ y $w$ preferirían estar juntos en lugar de con sus parejas actuales. Entonces, deben estar juntos en cada emparejamiento estable.\\
+
+Por lo tanto, si un hombre y una mujer se prefieren el uno al otro más que a cualquier otra persona, siempre estarán juntos en cualquier emparejamiento estable.
+
+\newpage
+
+\subsection{Ejercicio 1.3}
+Hay muchos otros escenarios en los que podemos plantear preguntas relacionadas con algún tipo de principio de "estabilidad". Aquí hay uno que involucra la competencia entre dos empresas.\\
+
+Supongamos que tenemos dos redes de televisión, a las que llamaremos $A$ y $B$. Hay $n$ franjas horarias de programación estelar, y cada red tiene $n$ programas de televisión. Cada red quiere diseñar un horario, es decir, asignar cada programa a una franja horaria distinta, para atraer la mayor cuota de mercado posible.\\
+
+Así es como determinamos qué tan bien les va a las dos redes en comparación entre sí, dado su horario. Cada programa tiene una calificación fija, basada en el número de personas que lo vieron el año pasado; asumiremos que ningún programa tiene exactamente la misma calificación. Una red gana una franja horaria determinada si el programa que programa para esa franja tiene una calificación más alta que el programa que la otra red programa para esa franja. El objetivo de cada red es ganar tantas franjas horarias como sea posible.\\
+
+Supongamos que en la primera semana de la temporada de otoño, la Red $A$ revela un horario $S$ y la Red $B$ revela un horario $T$. Con base en este par de horarios, cada red gana ciertas franjas horarias, de acuerdo con la regla mencionada anteriormente. Diremos que el par de horarios $(S, T)$ es estable si ninguna red puede cambiar unilateralmente su propio horario y ganar más franjas horarias. Es decir, no hay un horario $S^{'}$ tal que la Red $A$ gane más franjas horarias con el par $(S^{'}, T)$ de lo que ganó con el par $(S, T)$; y simétricamente, no hay un horario $T^{'}$ tal que la Red $B$ gane más franjas horarias con el par $(S, T^{'})$ de lo que ganó con el par $(S, T)$.\\
+
+El análogo de la pregunta de Gale y Shapley para este tipo de estabilidad es el siguiente: ¿Para cada conjunto de programas de televisión y calificaciones, siempre hay un par estable de horarios? Resuelve esta pregunta haciendo una de las siguientes dos cosas:\\
+
+(a) da un algoritmo que, para cualquier conjunto de programas de televisión y calificaciones asociadas, produzca un par estable de horarios; o\\
+
+(b) da un ejemplo de un conjunto de programas de televisión y calificaciones asociadas para el cual no haya un par estable de horarios.\\
+
+\newpage
+
+\textbf{Solución:} Supongamos que existen dos redes, $X$ e $Y$. Luego supongamos que la Red $X$ tiene tres programas $\{x_1, x_2, x_3\}$ con calificaciones de 20, 40, y 60; y la Red $Y$ tiene tres programas $\{y_1, y_2, y_3\}$ con calificaciones de 10, 30, y 50.\\
+
+En este caso, si la Red $X$ elige el horario $\{x_1, x_2, x_3\}$ y la Red $Y$ elige el horario $\{y_1, y_2, y_3\}$, la Red $Y$ siempre querrá cambiar su horario a $\{y_2, y_3, y_1\}$ para ganar dos franjas horarias en lugar de una.\\
+
+Por otro lado, si la Red $Y$ elige el horario $\{y_2, y_3, y_1\}$ y la Red X elige el horario $\{x_1, x_2, x_3\}$, la Red $X$ siempre querrá cambiar su horario a $\{x_2, x_3, x_1\}$ para ganar tres franjas horarias en lugar de dos.\\
+
+En ambos casos, no se puede encontrar una pareja estable de horarios, demostrando que no siempre existe una pareja estable de horarios para cualquier conjunto de programas y calificaciones.
+
+
+\subsection{Ejercicio 1.4}
+Gale y Shapley publicaron su artículo sobre el Problema de Emparejamiento Estable en 1962; sin embargo, una versión de su algoritmo ya se había estado utilizando durante diez años en el Programa Nacional de Asignación de Residentes, para el problema de asignar residentes médicos a hospitales.\\
+
+Básicamente, la situación era la siguiente. Había m hospitales, cada uno con un cierto número de posiciones disponibles para contratar residentes médicos. Había n estudiantes de medicina que se graduaban en un año determinado, interesados en unirse a uno de los hospitales. Cada hospital tenía una clasificación de los estudiantes en orden de preferencia, y cada estudiante tenía una clasificación de los hospitales en orden de preferencia. Supondremos que había más estudiantes graduándose de los que había plazas disponibles en los m hospitales.\\
+
+El interés, naturalmente, radicaba en encontrar una forma de asignar a cada estudiante a lo sumo un hospital, de manera que todas las posiciones disponibles en todos los hospitales quedaran ocupadas. (Dado que estamos suponiendo un excedente de estudiantes, habría algunos estudiantes que no serían asignados a ningún hospital).\\
+
+Decimos que una asignación de estudiantes a hospitales es estable si no se presentan ninguna de las siguientes situaciones.\\
+
+\begin{itemize}
+  \item Primer tipo de inestabilidad: Hay estudiantes $s$ y $s'$, y un hospital $h$ de manera que:
+  \begin{itemize}
+      \item $s'$ no está asignado a ningún hospital, y
+      \item $h$ prefiere a $s'$ sobre $s$.
+  \end{itemize}
+  \item Segundo tipo de inestabilidad: Hay estudiantes $s$ y $s'$, y dos hospitales $h$ y $h'$, de manera que:
+  \begin{itemize}
+      \item $s$ está asignado a $h$, y
+      \item $s'$ está asignado a $h'$, y
+      \item $h$ prefiere a $s'$ sobre $s$, y
+      \item $s'$ prefiere a $h$ sobre $h'$.
+  \end{itemize}
+\end{itemize}
+
+Tenemos básicamente el Problema de Emparejamiento Estable, con la diferencia de que (i) los hospitales generalmente desean más de un residente, y (ii) hay un excedente de estudiantes de medicina.
+Demuestra que siempre hay una asignación estable de estudiantes a hospitales y proporciona un algoritmo para encontrarla.\\
+
+\textbf{Solución:}
+El algoritmo es muy similar al que se presenta en la clase del Problema de Emparejamiento Estable original. En cada momento, un estudiante puede estar "comprometido" con un hospital o estar "libre". Un hospital puede tener posiciones disponibles o estar "lleno". El algoritmo es el siguiente:\\
+
+\begin{algorithm}
+\caption{Emperejamiento de hospitales con cupos y estudiantes}\label{alg:cap}
+\begin{algorithmic}
+\While{un hospital $h_i$ tenga posiciones disponibles}
+    \State $h_i$ ofrece una posición al siguiente estudiante $s_j$ en su lista de preferencias.
+    \If{$s_j$ está libre}
+        \State $s_j$ acepta la oferta.
+    \Else
+        \If{$s_j$ prefiere $h_k$ antes que $h_i$}
+            \State $s_j$ permanece comprometido con $h_k$.
+        \Else
+            \State $s_j$ se compromete con $h_i$.
+            \State El número de posiciones disponibles en $h_k$ aumenta en uno.
+            \State El número de posiciones disponibles en $h_i$ disminuye en uno.
+        \EndIf
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+Si suponemos que hay $m$ hospitales y $n$ estudiantes entonces el algoritmo termina en $\mathcal{O}(mn)$ pasos porque cada hospital ofrece una posición a un estudiante como máximo una vez, y en cada iteración, algún hospital ofrece una posición a algún estudiante.
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!50!black]
+    Recordar que la cantidad de la cantidad de plazas disponibles en los $m$ hospitales es menor que la cantidad de estudiantes
+\end{tcolorbox}
+
+Supongamos que hay $p_i > 0$ posiciones disponibles en el hospital $h_i$. El algoritmo termina con una asignación en la que todas las posiciones disponibles están ocupadas, porque cualquier hospital que no haya llenado todas sus posiciones debe haber ofrecido una a cada estudiante; pero entonces, todos estos estudiantes estarían comprometidos con algún hospital, lo que contradice nuestra suposición de que $\sum_{i=1}^{m} p_i < n$ \\
+
+Finalmente, queremos argumentar que la asignación es estable. Para el primer tipo de inestabilidad, supongamos que hay estudiantes $s$ y $s'$, y un hospital $h$ como se describió. Si $h$ prefiere a $s'$ antes que $s$, entonces $h$ habría ofrecido una posición a $s'$ antes de ofrecer una a $s$; desde entonces, $s'$ tendría una posición en algún hospital, y por lo tanto no estaría libre al final, lo que es una contradicción.\\
+
+Para el segundo tipo de inestabilidad, supongamos que el par $(h_i, s_j)$ causa inestabilidad. Entonces, $h_i$ debe haber ofrecido una posición a $s_j$, de lo contrario tendría $p_i$ residentes a todos los cuales prefiere antes que a $s_j$. Además, $s_j$ debe haber rechazado a $h_i$ en favor de algún $h_k$ que él/ella prefería; y por lo tanto $s_j$ debe estar comprometido con algún $h_l$ (posiblemente diferente de $h_k$) que él/ella también prefiere antes que $h_i$.
+
+\subsection{Ejercicio 1.5}
+
+\newpage
+
+
+
+
+
+\section{Notación Big O}
+\section{Grafos}
+\section{Greedy}
+\section{Divide y venceras}
+\section{Programación dinamica}
+
+
+\end{document}
