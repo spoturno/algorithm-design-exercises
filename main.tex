@@ -150,6 +150,29 @@ Finalmente, queremos argumentar que la asignación es estable. Para el primer ti
 Para el segundo tipo de inestabilidad, supongamos que el par $(h_i, s_j)$ causa inestabilidad. Entonces, $h_i$ debe haber ofrecido una posición a $s_j$, de lo contrario tendría $p_i$ residentes a todos los cuales prefiere antes que a $s_j$. Además, $s_j$ debe haber rechazado a $h_i$ en favor de algún $h_k$ que él/ella prefería; y por lo tanto $s_j$ debe estar comprometido con algún $h_l$ (posiblemente diferente de $h_k$) que él/ella también prefiere antes que $h_i$.
 
 \subsection{Ejercicio 1.5}
+El Problema de Asignación Estable, como se discute en el texto, asume que todos los hombres y mujeres tienen una lista de preferencias completamente ordenada. En este problema, consideraremos una versión en la que los hombres y mujeres pueden ser indiferentes entre ciertas opciones. Como antes, tenemos un conjunto $M$ de $n$ hombres y un conjunto $W$ de $n$ mujeres. Supongamos que cada hombre y cada mujer clasifican a los miembros del género opuesto, pero ahora permitimos empates en la clasificación. Por ejemplo (con $n = 4$), una mujer podría decir que $m_1$ está clasificado en primer lugar; el segundo lugar es un empate entre $m_2$ y $m_3$ (no tiene preferencia entre ellos); y $m_4$ está en último lugar. Diremos que $w$ prefiere a $m$ sobre $m'$ si $m$ está clasificado más alto que $m'$ en su lista de preferencias (no están empatados).\\
+
+Con indiferencias en las clasificaciones, podría haber dos nociones naturales de estabilidad. Y para cada una, podemos preguntar acerca de la existencia de asignaciones estables, de la siguiente manera:\\
+
+(a) Una inestabilidad fuerte en un emparejamiento perfecto $S$ consiste en un hombre $m$ y una mujer $w$, tal que cada uno de ellos prefiere al otro por encima de su pareja en $S$. ¿Siempre existe un emparejamiento perfecto sin inestabilidades fuertes? Proporcione un ejemplo de un conjunto de hombres y mujeres con listas de preferencias para las cuales cada emparejamiento perfecto tiene una inestabilidad fuerte; o dé un algoritmo que garantice encontrar un emparejamiento perfecto sin inestabilidades fuertes.\\
+
+(b) Una inestabilidad débil en un emparejamiento perfecto $S$ consiste en un hombre $m$ y una mujer $w$, tal que sus parejas en $S$ son $w'$ y $m'$, respectivamente, y se cumple una de las siguientes condiciones:
+
+\begin{itemize}
+    \item $m$ prefiere a $w$ sobre $w'$, y $w$ prefiere a $m$ sobre $m'$ o es indiferente entre estas dos opciones; o
+    \item $w$ prefiere a $m$ sobre $m'$, y $m$ prefiere a $w$ sobre $w'$ o es indiferente entre estas dos opciones.
+\end{itemize}
+
+En otras palabras, el emparejamiento entre $m$ y $w$ es preferido por ambos, o es preferido por uno mientras que el otro es indiferente. ¿Siempre existe un emparejamiento perfecto sin inestabilidades débiles? Proporcione un ejemplo de un conjunto de hombres y mujeres con listas de preferencias para las cuales cada asignación perfecta tiene una inestabilidad débil; o dé un algoritmo que garantice encontrar una asignación perfecta sin inestabilidades débiles.\\
+
+\textbf{Solución:}\\
+
+(a) La respuesta es sí. Una forma sencilla de abordar esto es deshacer los empates de alguna manera y luego ejecutar el algoritmo de emparejamiento estable en las listas de preferencias resultantes. Por ejemplo, podríamos deshacer los empates de manera lexicográfica. Es decir, si un hombre $m$ es indiferente entre dos mujeres $w_i$ y $w_j$, entonces $w_i$ aparecerá en la lista de preferencias de $m$ antes que $w_j$ si $i < j$, y si $j < i$, $w_j$ aparecerá antes que $w_i$. De manera similar, si una mujer $w$ es indiferente entre dos hombres $m_i$ y $m_j$, entonces $m_i$ aparecerá en la lista de preferencias de $w$ antes que $m_j$ si $i < j$, y si $j < i$, $m_j$ aparecerá antes que $m_i$.\\
+
+Ahora que tenemos listas de preferencias concretas, ejecutamos el algoritmo de emparejamiento estable. Sostenemos que el emparejamiento resultante no tendrá ninguna inestabilidad fuerte. Esta última afirmación es cierta porque cualquier inestabilidad fuerte sería una inestabilidad para el emparejamiento producido por el algoritmo, pero sabemos que el algoritmo produce un emparejamiento estable, es decir, un emparejamiento sin inestabilidades.\\
+
+(b) La respuesta es no. A continuación se presenta un contraejemplo sencillo. Supongamos que $n = 2$ y que $m_1$, $m_2$ son los dos hombres, y $w_1$, $w_2$ son las dos mujeres. Dejemos que $m_1$ sea indiferente entre $w_1$ y $w_2$ y que ambas mujeres prefieran a $m_1$ sobre $m_2$. Las elecciones de $m_2$ son irrelevantes. No existe un emparejamiento sin inestabilidad débil en este ejemplo, ya que independientemente de con quién se empareje $m_1$, la otra mujer junto con $m_1$ formarían una inestabilidad débil.
+
 
 \newpage
 
@@ -162,6 +185,7 @@ Para el segundo tipo de inestabilidad, supongamos que el par $(h_i, s_j)$ causa 
 \section{Greedy}
 \section{Divide y venceras}
 \section{Programación dinamica}
+\section{Referencias}
 
 
 \end{document}
