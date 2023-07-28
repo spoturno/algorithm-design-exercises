@@ -9,8 +9,10 @@
 \usepackage{colortbl}
 \usepackage{xcolor}
 
+
 \usepackage{tikz, pgfplots, tcolorbox}
 \usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
 
 
 \title{Algorithm Design Exercises}
@@ -194,7 +196,7 @@ Demuestra que siempre se puede encontrar un conjunto de truncaciones que cumpla 
 
 \textbf{Ejemplo:} Supongamos que tenemos dos barcos y dos puertos, y el "mes" tiene cuatro días. Supongamos que el horario del primer barco es:\\
 
-puerto $P_1$; en el mar; puerto $P_2$; en el mar\\
+    puerto $P_1$; en el mar; puerto $P_2$; en el mar\\
 
 y el horario del segundo barco es:\\
 
@@ -231,6 +233,34 @@ Ahora simplemente tenemos que demostrar:\\
 \textit{Demostración}. Si la asignación no es aceptable, entonces viola la condición (†). Es decir, algún barco $S_i$ pasa por el puerto $P_k$ después de que el barco $S_j$ ya haya parado allí. Pero en este caso, bajo nuestra relación de preferencia mencionada anteriormente, el barco $S_i$ "prefiere" el puerto $P_k$ a su puerto de escala actual, y el puerto $P_k$ "prefiere" al barco $S_i$ sobre el barco $S_j$. Esto contradice la suposición de que elegimos un emparejamiento estable entre barcos y puertos.
 
 $\hfill\blacksquare$
+
+\newpage
+
+\subsection{Ejercicio 1.7}
+
+Algunos de tus amigos trabajan para CluNet, una constructora de grandes redes de comunicación, y están investigando algoritmos para el enrutamiento en un tipo particular de conmutador de entrada/salida.\\
+
+Aquí está la configuración. Hay $n$ cables de entrada y $n$ cables de salida, cada uno dirigido desde una fuente hasta un terminal. Cada cable de entrada se encuentra con cada cable de salida en un solo punto distinto, en un dispositivo especial llamado caja de empalme. Los puntos en los cables están ordenados naturalmente en la dirección desde la fuente hasta el terminal; para dos puntos distintos $x$ e $y$ en el mismo cable, decimos que $x$ está aguas arriba de $y$ si $x$ está más cerca de la fuente que $y$, de lo contrario decimos que $x$ está aguas abajo de $y$. El orden en el que un cable de entrada se encuentra con los cables de salida no es necesariamente el mismo que el orden en el que otro cable de entrada se encuentra con los cables de salida. (Y viceversa para los órdenes en los que los cables de salida se encuentran con los cables de entrada). La Figura 1.8 muestra un ejemplo de esta colección de cables de entrada y salida.\\
+
+Ahora, aquí está el componente de conmutación de esta situación. Cada cable de entrada lleva una secuencia de datos distinta, y esta secuencia de datos debe ser conmutada a uno de los cables de salida. Si la secuencia de entrada $i$ se conmuta al cable de salida $j$, en la caja de empalme $B$, entonces esta secuencia pasa por todas las cajas de empalme aguas arriba de $B$ en el cable de entrada $i$, luego a través de $B$, y finalmente por todas las cajas de empalme aguas abajo de $B$ en el cable de salida $j$. No importa qué secuencia de datos de entrada se conmute a qué cable de salida, pero cada secuencia de datos de entrada debe ser conmutada a un cable de salida diferente. Además, y esto es el truco, ninguna de las secuencias de datos puede pasar por la misma caja de empalme después de la operación de conmutación.\\
+
+Finalmente, aquí está el problema. Demuestra que para cualquier patrón especificado en el que los cables de entrada y los cables de salida se encuentran entre sí (cada par se encuentra exactamente una vez), siempre se puede encontrar una conmutación válida de las secuencias de datos; una en la que cada secuencia de datos de entrada se conmute a una salida diferente, y ninguna de las secuencias resultantes pase por la misma caja de empalme. Además, proporciona un algoritmo para encontrar dicha conmutación válida.
+
+\newpage
+
+\begin{tikzpicture}
+    \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (A) at (0,0) {};
+    \draw[->] (A.east) -- ++(8cm,0) node[right] {Salida 1};
+
+    \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (B) at (0,-3) {};
+    \draw[->] (B.east) -- ++(8cm,0) node[right] {Salida 2};
+
+    \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (C) at (3,-6) {};
+    \node[below=of A] {Entrada 1};
+    \draw[->] (C.north) -- (3cm, -3cm);
+    
+    
+\end{tikzpicture}
 
 \newpage
 
