@@ -4,6 +4,10 @@
 \usepackage{hyperref}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{xcolor}
 
 \usepackage{tikz, pgfplots, tcolorbox}
 \usetikzlibrary{positioning}
@@ -173,11 +177,62 @@ Ahora que tenemos listas de preferencias concretas, ejecutamos el algoritmo de e
 
 (b) La respuesta es no. A continuación se presenta un contraejemplo sencillo. Supongamos que $n = 2$ y que $m_1$, $m_2$ son los dos hombres, y $w_1$, $w_2$ son las dos mujeres. Dejemos que $m_1$ sea indiferente entre $w_1$ y $w_2$ y que ambas mujeres prefieran a $m_1$ sobre $m_2$. Las elecciones de $m_2$ son irrelevantes. No existe un emparejamiento sin inestabilidad débil en este ejemplo, ya que independientemente de con quién se empareje $m_1$, la otra mujer junto con $m_1$ formarían una inestabilidad débil.
 
-
 \newpage
 
 
+\subsection{Ejercicio 1.6}
 
+Peripatetic Shipping Lines, Inc., es una compañía de navios que posee $n$ barcos y ofrece servicio a $n$ puertos. Cada uno de sus barcos tiene un horario que indica, para cada día del mes, cuál de los puertos está visitando en ese momento o si está en alta mar. (Puedes asumir que el "mes" aquí tiene $m$ días, donde $m > n$). Cada barco visita cada puerto exactamente durante un día del mes. Por razones de seguridad, PSL Inc. tiene el siguiente requisito estricto:\\
+
+(†) No pueden haber dos barcos en el mismo puerto en el mismo día.\\
+
+La compañía desea realizar mantenimiento en todos los barcos este mes, mediante el siguiente esquema. Quieren truncar el horario de cada barco: para cada barco $S_i$, habrá algún día en el que llegue a su puerto programado y simplemente permanezca allí el resto del mes (para el mantenimiento). Esto significa que $S_i$ no visitará los puertos restantes en su horario (si los hay) durante ese mes, pero esto está bien. Por lo tanto, la truncación del horario de $S_i$ consistirá simplemente en su horario original hasta un día específico en el que se encuentre en un puerto $P$; el resto del horario truncado simplemente indica que permanece en el puerto $P$.\\
+
+Ahora la pregunta de la compañía para ti es la siguiente: dado el horario de cada barco, encuentra una truncación de cada uno de ellos de manera que la condición (†) se cumpla siempre: que ningún barco esté en el mismo puerto en el mismo día.\\
+
+Demuestra que siempre se puede encontrar un conjunto de truncaciones que cumpla esta condición, y proporciona un algoritmo para encontrarlas.\\
+
+\textbf{Ejemplo:} Supongamos que tenemos dos barcos y dos puertos, y el "mes" tiene cuatro días. Supongamos que el horario del primer barco es:\\
+
+puerto $P_1$; en el mar; puerto $P_2$; en el mar\\
+
+y el horario del segundo barco es:\\
+
+en el mar; puerto $P_1$; en el mar; puerto $P_2$\\
+
+Entonces la (única) forma de elegir las truncaciones sería hacer que el primer barco permanezca en el puerto $P_2$ a partir del día 3, y hacer que el segundo barco permanezca en el puerto $P_1$ a partir del día 2.
+
+\newpage
+
+\textbf{Solución:} Para cada horario, debemos elegir un puerto de parada: el puerto en el cual el barco pasará el resto del mes. Implícitamente, estos puertos de parada definirán las truncaciones de los horarios. Diremos que una asignación de barcos a puertos de parada es aceptable si las truncaciones resultantes satisfacen las condiciones del problema, específicamente, la condición (†). (Ten en cuenta que debido a la condición (†), cada barco debe tener un puerto de parada distinto en cualquier asignación aceptable).\\
+
+Establecemos un problema de matrimonio estable que involucra barcos y puertos. Cada barco clasifica cada puerto en orden cronológico de sus visitas a ellos. Cada puerto clasifica cada barco en orden cronológico inverso de sus visitas a él. Consideremos el mismo ejemplo de antes pero con $n = 3$, podemos visualizar mejor esto en la siguiente tabla:
+
+\definecolor{lightred}{RGB}{255,200,200}
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+& día 1 & día 2 & día 3 & día 4 \\
+\hline
+$S_1$ & mar & $P_1$ & $P_2$ & \cellcolor{lightred}$P_3$ \\ 
+\hline
+$S_2$ & $P_1$ & \cellcolor{lightred}$P_2$ & $P_3$ & mar \\ 
+\hline
+$S_3$ & $P_2$ & $P_3$ & \cellcolor{lightred}$P_1$ & mar \\ 
+\hline
+\end{tabular}
+\end{center}
+
+Ahora simplemente tenemos que demostrar:\\
+
+\textbf{Hecho 1.1} \textit{ Un emparejamiento estable entre barcos y puertos define una asignación aceptable de puertos de escala.}\\
+
+\textit{Demostración}. Si la asignación no es aceptable, entonces viola la condición (†). Es decir, algún barco $S_i$ pasa por el puerto $P_k$ después de que el barco $S_j$ ya haya parado allí. Pero en este caso, bajo nuestra relación de preferencia mencionada anteriormente, el barco $S_i$ "prefiere" el puerto $P_k$ a su puerto de escala actual, y el puerto $P_k$ "prefiere" al barco $S_i$ sobre el barco $S_j$. Esto contradice la suposición de que elegimos un emparejamiento estable entre barcos y puertos.
+
+$\hfill\blacksquare$
+
+\newpage
 
 
 \section{Notación Big O}
