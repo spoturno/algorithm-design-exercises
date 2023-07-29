@@ -12,7 +12,7 @@
 
 \usepackage{tikz, pgfplots, tcolorbox}
 \usetikzlibrary{positioning}
-\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
 
 
 \title{Algorithm Design Exercises}
@@ -250,17 +250,36 @@ Finalmente, aquí está el problema. Demuestra que para cualquier patrón especi
 
 \begin{tikzpicture}
     \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (A) at (0,0) {};
-    \draw[->] (A.east) -- ++(8cm,0) node[right] {Salida 1};
+    \draw[-{Stealth[scale=1.5]}] (A.east) -- ++(8cm,0) node[right, align=center] {Salida 1\\ (cruza a \\ Entrada 2 antes \\ que Entrada 1)};
 
     \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (B) at (0,-3) {};
-    \draw[->] (B.east) -- ++(8cm,0) node[right] {Salida 2};
+    \draw[-{Stealth[scale=1.5]}] (B.east) -- ++(8cm,0) node[right, align=center] {Salida 2\\ (cruza a \\ Entrada 1 antes \\ que Entrada 2)};
 
     \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (C) at (3,-6) {};
-    \node[below=of A] {Entrada 1};
-    \draw[->] (C.north) -- (3cm, -3cm);
-    
-    
+    \node[below, align=center] at (C.south) {Entrada 1\\(cruza a\\Salida 2 antes\\que Salida 1};
+    \draw[-{Stealth[scale=1.5]}] (C.north) -- (3cm, -3cm);
+
+    \node[shape=circle, draw=black, minimum width=0.7cm, minimum height=0.7cm, inner sep=0pt] (D) at (6,-6) {};
+    \node[below, align=center] at (D.south) {Entrada 2\\(cruza a\\Salida 1 antes\\que Salida 2};
+    \draw[dashed, -{Stealth[scale=1.5]}] (D.north) .. controls +(0,0) and +(2,-2) .. (4,0);
+
+    \draw[dashed, -{Stealth[scale=1.5]}] (4, 0) -- (1.5, -3);
+
+    \draw[dashed, -{Stealth[scale=1.5]}] (1.5, -3) .. controls +(0,0) and +(-1, -2) .. (1.5,2);
+
+    \draw[-{Stealth[scale=1.5]}] (3, -3) -- (6, 0);
+
+    \draw[-{Stealth[scale=1.5]}] (6, 0) -- (6, 1.5);
+
+    \node[above] at (4, 0) {Unión};
+    \node[below] at (1.5, -3) {Unión};
+    \node[below] at (3.7, -3) {Unión};
+    \node[below] at (6.5, 0) {Unión};
 \end{tikzpicture}
+
+
+\textbf{Figura 1.8} Un ejemplo con dos cables de entrada y dos cables de salida. La entrada 1 tiene su unión con la salida 2 aguas arriba de su unión con la salida 1; la entrada 2 tiene su unión con la salida 1 aguas arriba de su unión con la salida 2. Una solución válida es cambiar el flujo de datos de la entrada 1 a la salida 2, y el flujo de datos de la entrada 2 a la salida 1. Por otro lado, si el flujo de la entrada 1 se cambiara a la salida 1, y el flujo de la entrada 2 se cambiara a la salida 2, entonces ambos flujos pasarían a través de la caja de unión en el punto de encuentro de la entrada 1 y la salida 2 -- y esto no está permitido.
+
 
 \newpage
 

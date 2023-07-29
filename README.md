@@ -4,7 +4,7 @@ Este repositorio es un proyecto de código abierto creado para ayudar a estudian
 ## Contribuir
 ¡Gracias por considerar contribuir a nuestro proyecto! El apoyo de la comunidad es lo que impulsa hacia adelante a los proyectos de código abierto y tu ayuda es muy apreciada.
 
-Para contribuir, simplemente envíanos un correo electrónico a: tomas.spoturno@fing.edu.uy. Actualmente, el proyecto está alojado en Overleaf. Sin embargo, tenemos planes de hacerlo completamente de código abierto y transferirlo a este repositorio en el futuro. Por ahora, estaré actualizando el repositorio con la última versión del documento cada vez que se complete un nuevo ejercicio.
+Para contribuir directamente al documento LaTeX de la plataforma Overleaf, simplemente envíanos un correo electrónico a tomas.spoturno@fing.edu.uy. No importa cuál sea tu entorno de trabajo, puedes contribuir al repositorio realizando un fork del mismo y, posteriormente, enviar un pull request detallando los cambios que deseas agregar.
 
 Si encuentras algún error o crees que algún cambio es necesario, por favor, no dudes en levantar un issue en nuestro repositorio de GitHub. Este feedback es crucial para mejorar y refinar nuestro trabajo.
 
