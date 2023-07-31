@@ -291,7 +291,24 @@ Motivados por esta intuición, establecemos un problema de "matrimonio estable" 
 Para demostrar esto, supongamos que este cambio hace que dos flujos de datos se crucen en una caja de conexiones. Supongamos que la caja de conexiones está en el punto de encuentro del cable de entrada $i$ y el cable de salida $j$. Entonces, uno de los flujos debe ser el que se origina en el cable de entrada $i$; el otro flujo debe haber cambiado desde un cable de entrada diferente, digamos el cable de entrada $k$, hacia el cable de salida $j$. Pero en este caso, el cable de salida $j$ prefiere el cable de entrada $i$ al cable de entrada $k$ (ya que $j$ se encuentra con $i$ más abajo que con $k$); y el cable de entrada $i$ prefiere el cable de salida $j$ al cable de salida, digamos el cable de salida $l$, al cual está realmente conectado -- ya que se encuentra con el cable de salida $j$ aguas arriba del Cable de salida . Esto contradice la suposición de que hemos elegido un emparejamiento estable entre los cables de entrada y los cables de salida.\\
 
 Suponiendo que las intersecciones de los cables de entrada y los cables de salida están representadas por listas que contienen el orden en que cada cable se encuentra con los otros cables, podemos establecer las listas de preferencias para el problema del emparejamiento estable en tiempo $\mathcal{O}(n^2)$. Calcular el emparejamiento estable luego requiere tiempo adicional de $\mathcal{O}(n^2)$.
- 
+
+\subsection{Ejercicio 1.8}
+Para este problema, exploraremos la cuestión de la veracidad en el Problema de Emparejamiento Estable y específicamente en el algoritmo de Gale-Shapley. La pregunta básica es: ¿Puede un hombre o una mujer terminar en una mejor posición mintiendo acerca de sus preferencias? Más concretamente, suponemos que cada participante tiene un verdadero orden de preferencia. Ahora considera a una mujer $w$. Supongamos que $w$ prefiere al hombre $m$ antes que $m'$, pero ambos $m$ y $m'$ están bajos en su lista de preferencias. ¿Podría ser el caso que al cambiar el orden de $m$ y $m'$ en su lista de preferencias (es decir, al afirmar falsamente que ella prefiere a $m'$ antes que $m$) y al ejecutar el algoritmo con esta falsa lista de preferencias, $w$ terminará con un hombre $m''$ que realmente prefiere antes que ambos $m$ y $m'$? (Podemos hacer la misma pregunta para los hombres, pero nos centraremos en el caso de las mujeres para el propósito de esta pregunta).\\
+
+Resuelve esta pregunta haciendo una de las siguientes dos cosas:\\
+
+(a) Proporciona una prueba de que, para cualquier conjunto de listas de preferencias, cambiar el orden de una pareja en la lista no puede mejorar al compañero de una mujer en el algoritmo de Gale-Shapley; o\\
+
+(b) Proporciona un ejemplo de un conjunto de listas de preferencias para el cual hay un cambio que mejoraría al compañero de una mujer que cambió las preferencias.\\
+
+\textbf{Solución:} Para responder a esta pregunta, necesitamos entender una característica importante del algoritmo de Gale-Shapley: en la versión donde los hombres proponen y las mujeres aceptan o rechazan, el resultado es óptimo para los hombres y pésimo para las mujeres. Esto significa que cada hombre obtiene la mejor pareja que puede obtener (dadas las preferencias de las mujeres), y cada mujer obtiene la peor pareja que puede obtener (dadas las preferencias de los hombres).\\
+
+(a) Entonces, ¿puede una mujer $w$ mejorar su pareja mintiendo sobre sus preferencias? La respuesta es no. Para ver por qué, considera el caso en que ella prefiere $m$ a $m'$. La única razón por la que alguna vez estaría emparejada con $m'$ en la situación de lista de preferencias verdaderas es si $m$ es tomado por otra mujer $w'$ a quien él prefiere a $w$. Ahora supón que $w$ miente y dice que prefiere a $m'$ a $m$. Esto no hace que $m$ esté más disponible de lo que estaba antes. Todavía es tomado por $w'$ en el proceso de propuesta antes de que él proponga a $w$. Así que la mentira no mejoró la posición de $w$.\\
+
+(b) Por otro lado, es interesante notar que la situación inversa no es simétrica. Un hombre podría potencialmente mejorar su resultado mintiendo sobre sus preferencias. Como los hombres proponen en el algoritmo de Gale-Shapley, un hombre que no revela su verdadera preferencia podría obtener una mejor pareja. Esto se debe a que el algoritmo es "óptimo para el proponente", y en este caso, el proponente es el hombre.\\
+
+Por lo tanto, la respuesta a tu problema es que una mujer no puede mejorar su situación en el algoritmo de Gale-Shapley mintiendo sobre sus preferencias.
+
 
 \newpage
 
