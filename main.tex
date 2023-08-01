@@ -8,6 +8,8 @@
 \usepackage{multirow}
 \usepackage{colortbl}
 \usepackage{xcolor}
+\usepackage{enumitem}
+
 
 
 \usepackage{tikz, pgfplots, tcolorbox}
@@ -25,8 +27,6 @@
 \maketitle \newpage
 
 \tableofcontents \newpage
-
-
 
 
 \section{Emparejamiento estable}
@@ -309,9 +309,97 @@ Resuelve esta pregunta haciendo una de las siguientes dos cosas:\\
 
 Por lo tanto, la respuesta a tu problema es que una mujer no puede mejorar su situación en el algoritmo de Gale-Shapley mintiendo sobre sus preferencias.
 
+\newpage
+
+\subsection{Ejercicio resuelto 1}
+Consideremos una ciudad con $n$ hombres y $n$ mujeres que desean casarse entre sí. Cada hombre tiene una lista de preferencias que clasifica a todas las mujeres, y cada mujer tiene una lista de preferencias que clasifica a todos los hombres.\\
+
+El conjunto de las $2n$ personas se divide en dos categorías: personas buenas y
+personas malas. Supongamos que para un número $k$, $1 < k < n - 1$, hay $k$ hombres buenos y $k$ mujeres buenas; por tanto, hay $n - k$ hombres malos y $n - k$ mujeres malas.\\
+
+Todo el mundo preferiría casarse con cualquier persona buena que con cualquier persona mala.
+Formalmente, cada lista de preferencias tiene la propiedad de clasificar a cada persona buena del sexo opuesto más alto que a cada persona mala del sexo opuesto: sus primeras $k$ entradas son las personas buenas (del sexo opuesto) en algún orden, y sus siguientes $n - k$ son las personas malas (del sexo opuesto) en algún orden. \\
+
+Demostrar que en cada emparejamiento estable, cada hombre bueno está casado con una mujer buena. buena.\\ 
+
+\textbf{Solución:} Una forma natural de empezar a pensar en este problema es suponer que la afirmación es falsa y tratar de obtener una contradicción. ¿Qué significaría que la afirmación fuera falsa? Existiría algún emparejamiento estable $M$ en el que un buen hombre $m$ estuviera casado con una mala mujer $w$.\\
+
+Consideremos ahora cómo son los demás pares de $M$. Hay $k$ hombres buenos y $k$ mujeres buenas. ¿Podría darse el caso de que cada mujer buena esté casada con un hombre bueno en este emparejamiento $M$? No: uno de los hombres buenos (es decir, $m$) ya está casado con una mujer mala, por lo que sólo quedan $k - 1$ hombres buenos. Por lo tanto, aunque todos ellos estuvieran casados con una buena mujer, aún quedaría alguna mujer buena casada con un hombre malo.\\
+
+Sea $w'$ dicha mujer buena, que está casada con un hombre malo. Ahora es fácil identificar una inestabilidad en $M$: consideremos la pareja $(m, w')$. Cada una es buena, pero está casada con un mal compañero. Por tanto, cada una de ellas prefiere a la otra antes que a su pareja actual y, por tanto, $(m, w')$ es una inestabilidad. Esto contradice nuestra supuesto de que $M$ es estable y, por tanto, concluye la prueba.
 
 \newpage
 
+\subsection{Ejercicio resuelto 2}
+Podemos pensar en una generalización del problema del emparejamiento estable en la que determinadas parejas hombre-mujer estén explícitamente prohibidas. En el caso de empleadores y solicitantes, podríamos imaginar que determinados solicitantes simplemente carecen de las cualificaciones o certificaciones necesarias, por lo que no pueden ser contratados en determinadas empresas, por muy deseables que parezcan. Utilizando la analogía con el matrimonio entre hombres y mujeres, tenemos un conjunto $M$ de $n$ hombres, un conjunto $W$ de $n$ mujeres, y un conjunto $F \subseteq M \times W$ de parejas a las que simplemente no se les permite casarse. Cada hombre $m$ clasifica a todas las mujeres $w$ para las que $(m, w)$ no pertenece a $F$, y cada mujer $w$ clasifica a todos los hombres $m$ para los que $(m, w)$ no pertenece a $F$.\\
+
+En este entorno más general, decimos que una correspondencia $S$ es estable si no muestra ninguno de los siguientes tipos de inestabilidad.
+
+\begin{enumerate}[label=(\roman*)]
+\item Hay dos pares $(m, w)$ y $(m', w')$ en $S$ con la propiedad de que $(m, w') \not\in F$, $m$ prefiere a $w'$ en lugar de $w$, y $w'$ prefiere a $m$ en lugar de $m'$. (El tipo habitual de inestabilidad.)
+\item Hay un par $(m, w) \in S$, y un hombre $m'$, tal que $m'$ no forma parte de ningún par en el emparejamiento, $(m', w) \not\in F$, y $w$ prefiere a $m'$ en lugar de $m$. (Un solo hombre es más deseable y no está prohibido.)
+\item Hay un par $(m, w) \in S$, y una mujer $w'$, tal que $w'$ no forma parte de ningún par en el emparejamiento, $(m, w') \not\in F$, y $m$ prefiere a $w'$ en lugar de $w$. (Una sola mujer es más deseable y no está prohibida.)
+\item Hay un hombre $m$ y una mujer $w$, ninguno de los cuales forma parte de ningún par en el emparejamiento, de modo que $(m, w) \not\in F$. (Hay dos personas solteras sin nada que les impida casarse entre sí.)
+\end{enumerate}
+
+Nótese que bajo estas definiciones más generales, un emparejamiento estable no necesariamente debe ser un emparejamiento perfecto. \\
+
+Ahora podemos preguntar: ¿Para cada conjunto de listas de preferencias y cada conjunto de pares prohibidos, siempre existe un emparejamiento estable? Resuelve esta pregunta haciendo una de las dos siguientes cosas: (a) proporciona un algoritmo que, para cualquier conjunto de listas de preferencias y pares prohibidos, produce un emparejamiento estable; o (b) proporciona un ejemplo de un conjunto de listas de preferencias y pares prohibidos para el cual no hay un emparejamiento estable.\\
+
+\newpage
+
+\textbf{Solución:} El algoritmo de Gale-Shapley es notablemente robusto a variaciones en el Problema de Emparejamiento Estable. Entonces, si te encuentras con una nueva variante del problema y no puedes encontrar un contraejemplo para la estabilidad, a menudo es una buena idea comprobar si una adaptación directa del algoritmo G-S producirá emparejamientos estables. \\
+
+Resulta que ese es el caso aquí. Demostraremos que siempre existe un emparejamiento estable, incluso en este modelo más general con pares prohibidos, y lo haremos adaptando el algoritmo G-S. Para hacer esto, consideremos por qué el algoritmo G-S original no puede ser utilizado directamente. La dificultad, por supuesto, es que el algoritmo G-S no sabe nada acerca de los pares prohibidos, y por lo tanto, la condición en el bucle While,\\
+
+\texttt{Mientras haya un hombre m que esté libre y no le haya propuesto matrimonio a todas las mujeres,}\\
+
+no funcionará: no queremos que $m$ proponga a una mujer $w$ para la cual la pareja $(m, w)$ está prohibida. Así pues, consideremos una variación del algoritmo G-S en la que sólo hacemos un cambio: modificamos el bucle While de tal manera que diga:\\
+
+\texttt{Mientras haya un hombre $m$ que esté libre y no se haya declarado a todas las mujeres $w$ por las que $(m, w) \not\in F$}\\
+
+\begin{algorithm}
+\caption{Este es el algoritmo completo}\label{alg:cap}
+\begin{algorithmic}
+\State Inicialmente todos los $m \not\in M$ y $w \not\in W$ están libres
+\While{Mientras haya un hombre $m$ que esté libre y no se haya declarado a todas las mujeres $w$ por las que $(m, w) \not\in F$}
+    \State Elegir dicho hombre $m$
+    \State Sea $w$ la mujer mejor situada en la lista de preferencias de $m$
+a la que $m$ aún no ha propuesto matrimonio
+    \If{$w$ está libre}
+        \State $(m,w)$ Se comprometen.
+    \Else \Comment{$w$ está comprometida con $m'$}
+        \If{$w$ prefiere a $m'$ antes que $m$}
+            \State $m$ permanece libre.
+        \Else \Comment{$w$ prefiere a $m$ antes que $m'$}
+            \State $(m, w)$ se comprometen.
+            \State $m'$ queda libre
+        \EndIf
+    \EndIf
+\EndWhile
+\State \Return el conjunto de S de parejas comprometidas
+\end{algorithmic}
+\end{algorithm}
+
+Demostramos ahora que esto da lugar a un emparejamiento estable, según nuestra nueva definición de estabilidad.\\
+
+Para empezar, los hechos (1.1), (1.2) y (1.3) del texto siguen siendo verdaderos (en particular, el algoritmo terminará en un máximo de $n^2$ iteraciones). Además, no tenemos que preocuparnos por establecer que la coincidencia resultante $S$ sea perfecta (de hecho, puede que no lo sea). También notamos un par adicional de hechos. Si $m$ es un hombre que no forma parte de una pareja en $S$, entonces $m$ debe haberle propuesto a cada mujer no prohibida; y si $w$ es una mujer que no forma parte de una pareja en $S$, entonces debe ser que ningún hombre haya propuesto a $w$.\\
+
+Finalmente, solo necesitamos mostrar:
+
+\begin{flushleft}
+    \textbf{(1.9)} $\quad$ No hay inestabilidad con respecto al emparejamiento $S$ devuelto.
+\end{flushleft}
+
+\textit{Demostración}. Nuestra definición general de inestabilidad consta de cuatro partes: Esto significa que debemos asegurarnos de que ninguno de los cuatro problemas ocurra.\\
+
+Primero, supongamos que hay una inestabilidad de tipo $(i)$, que consiste en parejas $(m, w)$ y $(m', w')$ en S con la propiedad de que $(m, w') \not\in F$, m prefiere a w' sobre w y w' prefiere a m sobre m'. De esto se deduce que m debe haberle propuesto matrimonio a w'; por lo tanto, w rechazó a m, y así ella prefiere a su pareja final sobre m, lo que crea una contradicción.\\
+
+A continuación, supongamos que hay una inestabilidad de tipo $(ii)$, que consiste en una pareja $(m, w) \in S$ y un hombre $m'$, de modo que $m'$ no es parte de ninguna pareja en el emparejamiento, $(m', w) \not\in F$ y $w$ prefiere a $m'$ sobre $m$. Entonces $m'$ debe haberle propuesto matrimonio a $w$ y haber sido rechazado; nuevamente, esto implica que $w$ prefiere a su pareja final sobre $m'$ —una contradicción.\\
+
+Tercero, supongamos que hay una inestabilidad de tipo $(iii)$, que consiste en una pareja $(m, w) \in S$ y una mujer $w'$, de modo que $w'$ no es parte de ninguna pareja en el emparejamiento, $(m, w') \not\in F$ y $m$ prefiere a $w'$ sobre $w$. Entonces ningún hombre le propuso matrimonio a $w'$ en absoluto; en particular, $m$ nunca le propuso matrimonio a $w'$, y por lo tanto él debe preferir a $w$ sobre $w'$ —una contradicción.\\
+
+Por último, supongamos que hay una inestabilidad de tipo $(iv)$, que consiste en un hombre $m$ y una mujer $w$, ninguno de los cuales es parte de ninguna pareja en el emparejamiento, de modo que $(m, w) \not\in F$. Pero para que $m$ esté soltero, debe haberle propuesto matrimonio a todas las mujeres no prohibidas; en particular, debe haberle propuesto matrimonio a $w$, lo que significa que ella ya no estaría soltera —una contradicción. $\blacksquare$\\
 
 \section{Notación Big O}
 \section{Grafos}
