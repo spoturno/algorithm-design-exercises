@@ -1,5 +1,5 @@
 # Algorithm Design Solved Exercises
-Este repositorio es un proyecto de código abierto creado para ayudar a estudiantes y profesionales por igual a entender y resolver los ejercicios presentados en el Libro 'Algorithm Design', escrito por Jon Kleinberg y Éva Tardos. La intención es proporcionar una plataforma colaborativa donde los usuarios pueden contribuir y aprender simultáneamente.
+Este repositorio es un proyecto de código abierto creado para ayudar a estudiantes y profesionales por igual a entender y resolver los ejercicios presentados en el Libro 'Algorithm Design', escrito por Jon Kleinberg y Éva Tardos. Asimismo, se hace referencia a cada ejercicio del práctico correspondiente al curso de "Programación 3". La intención es proporcionar una plataforma colaborativa donde los usuarios pueden contribuir y aprender simultáneamente.
 
 ## Contribuir
 ¡Gracias por considerar contribuir a nuestro proyecto! El apoyo de la comunidad es lo que impulsa hacia adelante a los proyectos de código abierto y tu ayuda es muy apreciada.
